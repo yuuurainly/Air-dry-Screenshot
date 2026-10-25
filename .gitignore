@@ -1,0 +1,30 @@
+# Build output
+[Bb]in/
+[Oo]bj/
+[Aa]rtifacts/
+[Tt]est[Rr]esults/
+
+# IDE state
+.vs/
+.vscode/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Local SDK, caches, and downloaded packages
+.dotnet/
+.nuget/
+*.zip
+
+# Runtime output and local secrets
+*.log
+*.db
+*.db-shm
+*.db-wal
+*.pfx
+secrets.json
+
+# OS metadata
+Thumbs.db
+Desktop.ini

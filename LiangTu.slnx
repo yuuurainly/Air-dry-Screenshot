@@ -1,0 +1,10 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/LiangTu.App/LiangTu.App.csproj" />
+    <Project Path="src/LiangTu.Core/LiangTu.Core.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/LiangTu.App.Tests/LiangTu.App.Tests.csproj" />
+    <Project Path="tests/LiangTu.Core.Tests/LiangTu.Core.Tests.csproj" />
+  </Folder>
+</Solution>
