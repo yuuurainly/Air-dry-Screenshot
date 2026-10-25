@@ -1,0 +1,38 @@
+<Window x:Class="LiangTu.App.Windows.HotZoneWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="晾图热区"
+        Width="960"
+        Height="7"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        AllowsTransparency="True"
+        Background="Transparent"
+        ShowInTaskbar="False"
+        ShowActivated="False"
+        Focusable="False"
+        Topmost="True"
+        WindowStartupLocation="Manual"
+        Cursor="Hand"
+        Style="{StaticResource BaseWindowStyle}"
+        MouseEnter="Window_MouseEnter"
+        MouseLeave="Window_MouseLeave"
+        MouseLeftButtonDown="Window_MouseLeftButtonDown">
+    <Grid Background="{StaticResource HotZoneHitBrush}">
+        <Border x:Name="HintLine"
+                Width="64"
+                Height="2"
+                Margin="0,1,0,0"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top"
+                Background="{StaticResource AccentBrush}"
+                CornerRadius="1"
+                Opacity="0.82"
+                Effect="{StaticResource HotZoneShadow}"
+                RenderTransformOrigin="0.5,0.5">
+            <Border.RenderTransform>
+                <ScaleTransform x:Name="HintScale" ScaleX="1" ScaleY="1" />
+            </Border.RenderTransform>
+        </Border>
+    </Grid>
+</Window>

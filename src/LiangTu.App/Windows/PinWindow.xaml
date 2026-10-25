@@ -1,0 +1,99 @@
+<Window x:Class="LiangTu.App.Windows.PinWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="贴图"
+        WindowStyle="None"
+        ResizeMode="CanResizeWithGrip"
+        AllowsTransparency="True"
+        Background="Transparent"
+        ShowInTaskbar="False"
+        Style="{StaticResource BaseWindowStyle}">
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="0"
+                      ResizeBorderThickness="6"
+                      CornerRadius="7"
+                      GlassFrameThickness="0" />
+    </WindowChrome.WindowChrome>
+    <Window.ContextMenu>
+        <ContextMenu>
+            <MenuItem Header="不透明度 100%" Tag="1" Click="OpacityMenuItem_Click" />
+            <MenuItem Header="不透明度 85%" Tag="0.85" Click="OpacityMenuItem_Click" />
+            <MenuItem Header="不透明度 65%" Tag="0.65" Click="OpacityMenuItem_Click" />
+            <MenuItem Header="不透明度 45%" Tag="0.45" Click="OpacityMenuItem_Click" />
+            <Separator />
+            <MenuItem x:Name="TopmostMenuItem"
+                      Header="置顶"
+                      IsCheckable="True"
+                      Click="TopmostMenuItem_Click" />
+            <Separator />
+            <MenuItem Header="关闭贴图" Click="CloseMenuItem_Click" />
+        </ContextMenu>
+    </Window.ContextMenu>
+    <Border x:Name="Frame"
+            BorderThickness="1"
+            CornerRadius="9"
+            ClipToBounds="True">
+        <Border.Style>
+            <Style TargetType="{x:Type Border}">
+                <Setter Property="Background" Value="{StaticResource DarkSurfaceBrush}" />
+                <Setter Property="BorderBrush" Value="{StaticResource DarkBorderBrush}" />
+                <Setter Property="Effect" Value="{StaticResource SoftWindowShadow}" />
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="BorderBrush" Value="{StaticResource AccentBrush}" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+        </Border.Style>
+        <Grid>
+            <Image x:Name="PinImage"
+                   Stretch="Uniform"
+                   RenderOptions.BitmapScalingMode="HighQuality"
+                   MouseLeftButtonDown="PinImage_MouseLeftButtonDown"
+                   MouseWheel="PinImage_MouseWheel" />
+            <Button x:Name="ReturnPinButton"
+                    Width="28"
+                    Height="28"
+                    Margin="5,5,0,0"
+                    Padding="0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Background="{StaticResource DarkSurfaceRaisedBrush}"
+                    Style="{StaticResource DarkQuietButtonStyle}"
+                    ToolTip="钉回晾衣绳"
+                    AutomationProperties.Name="钉回晾衣绳"
+                    Click="ReturnPinButton_Click">
+                <Path Width="14"
+                      Height="18"
+                      Fill="{StaticResource AccentBrush}"
+                      Stretch="Fill"
+                      Data="M 8,1 L 14,1 L 13,8 L 17,11 L 11,11 L 11,17 L 9,20 L 8,17 L 8,11 L 2,11 L 6,8 Z" />
+            </Button>
+            <Button Width="25"
+                    Height="25"
+                    Margin="0,5,5,0"
+                    Padding="0"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Top"
+                    Style="{StaticResource DarkQuietButtonStyle}"
+                    ToolTip="关闭贴图"
+                    AutomationProperties.Name="关闭贴图"
+                    Click="CloseButton_Click"
+                    Content="×" />
+            <Border Margin="8"
+                    Padding="7,4"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Bottom"
+                    Background="{StaticResource DarkSurfaceRaisedBrush}"
+                    BorderBrush="{StaticResource DarkBorderBrush}"
+                    BorderThickness="1"
+                    CornerRadius="4"
+                    IsHitTestVisible="False">
+                <TextBlock x:Name="PinStatusText"
+                           Foreground="{StaticResource DarkTextSecondaryBrush}"
+                           FontFamily="{StaticResource MonoFont}"
+                           FontSize="10" />
+            </Border>
+        </Grid>
+    </Border>
+</Window>

@@ -1,0 +1,409 @@
+<Window x:Class="LiangTu.App.Windows.RopeWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="clr-namespace:LiangTu.App.Controls"
+        Title="晾图"
+        Width="960"
+        Height="176"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        AllowsTransparency="True"
+        Background="{x:Null}"
+        ShowInTaskbar="False"
+        ShowActivated="False"
+        Topmost="True"
+        WindowStartupLocation="Manual"
+        Style="{StaticResource BaseWindowStyle}">
+    <Window.Resources>
+        <Style x:Key="GlassDeleteButtonStyle" TargetType="{x:Type Button}">
+            <Setter Property="Width" Value="22" />
+            <Setter Property="Height" Value="22" />
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Foreground" Value="{StaticResource InkBrush}" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="CloseSurface"
+                                Background="{StaticResource GlassInnerBorderBrush}"
+                                BorderBrush="{StaticResource GlassOuterBorderBrush}"
+                                BorderThickness="1"
+                                CornerRadius="11">
+                            <TextBlock HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       FontFamily="{StaticResource TextFont}"
+                                       FontSize="14"
+                                       FontWeight="SemiBold"
+                                       Text="×" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="CloseSurface"
+                                        Property="Background"
+                                        Value="{StaticResource WhiteBrush}" />
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="CloseSurface" Property="Opacity" Value="0.7" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Grid x:Name="RopeContent"
+          Background="{x:Null}"
+          AllowDrop="True"
+          Drop="ExpandedSurface_Drop"
+          DragOver="ExpandedSurface_DragOver"
+          DragLeave="RopeContent_DragLeave">
+        <controls:RopeRail x:Name="RopeRail"
+                           Height="27"
+                           Margin="10,0,10,0"
+                           VerticalAlignment="Top"
+                           IsHitTestVisible="False"
+                           Stroke="{StaticResource RopeBrush}"
+                           ShadowBrush="{StaticResource RopeShadowBrush}"
+                           Sag="10" />
+
+        <Border x:Name="IdentityPill"
+                Margin="16,4,0,0"
+                Padding="9,4"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Background="{StaticResource FloatingPillBrush}"
+                BorderBrush="{StaticResource FloatingPillBorderBrush}"
+                BorderThickness="1"
+                CornerRadius="8"
+                Effect="{StaticResource FloatingControlShadow}"
+                Panel.ZIndex="2"
+                MouseEnter="InteractiveArea_MouseEnter"
+                MouseLeave="InteractiveArea_MouseLeave">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Foreground="{StaticResource DarkTextBrush}"
+                           FontFamily="{StaticResource DisplayFont}"
+                           FontSize="11"
+                           FontWeight="SemiBold"
+                           Text="晾衣绳" />
+                <Border Margin="7,0,0,0"
+                        Padding="6,1"
+                        Background="{StaticResource DarkSurfaceRaisedBrush}"
+                        CornerRadius="7">
+                    <TextBlock x:Name="CountText"
+                               Foreground="{StaticResource DarkTextSecondaryBrush}"
+                               FontFamily="{StaticResource MonoFont}"
+                               FontSize="9"
+                               Text="0" />
+                </Border>
+            </StackPanel>
+        </Border>
+
+        <Button x:Name="BasketButton"
+                Width="62"
+                Height="58"
+                Margin="0,0,13,0"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Top"
+                Panel.ZIndex="2"
+                Background="Transparent"
+                BorderThickness="0"
+                Cursor="Hand"
+                ToolTip="图片库"
+                AutomationProperties.Name="打开图片库"
+                MouseEnter="InteractiveArea_MouseEnter"
+                MouseLeave="InteractiveArea_MouseLeave"
+                Click="BasketButton_Click">
+            <Button.Template>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid x:Name="BasketRoot">
+                        <Path Width="8"
+                              Height="17"
+                              HorizontalAlignment="Center"
+                              VerticalAlignment="Top"
+                              Fill="{StaticResource ClothespinBrush}"
+                              Stroke="{StaticResource ClothespinSeamBrush}"
+                              StrokeThickness="1"
+                              Data="M 2,1 L 6,1 L 6,16 L 2,16 Z" />
+                        <Border Width="42"
+                                Height="18"
+                                Margin="0,24,0,0"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Top"
+                                Background="{StaticResource SurfaceRaisedBrush}"
+                                BorderBrush="{StaticResource GlassOuterBorderBrush}"
+                                BorderThickness="1"
+                                CornerRadius="4" />
+                        <Path Width="48"
+                              Height="29"
+                              Margin="0,14,0,0"
+                              HorizontalAlignment="Center"
+                              VerticalAlignment="Top"
+                              Fill="{StaticResource ClothespinBrush}"
+                              Stroke="{StaticResource ClothespinSeamBrush}"
+                              StrokeThickness="1.2"
+                              Data="M 2,1 L 46,1 L 41,25 Q 24,31 7,25 Z" />
+                        <Path Width="42"
+                              Height="24"
+                              Margin="0,18,0,0"
+                              HorizontalAlignment="Center"
+                              VerticalAlignment="Top"
+                              Stroke="{StaticResource ClothespinGrooveBrush}"
+                              StrokeThickness="0.8"
+                              Data="M 4,1 L 38,1 M 3,8 L 39,8 M 5,16 L 37,16" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="BasketRoot" Property="Opacity" Value="0.92" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+
+        <ListBox x:Name="RopeList"
+                 Margin="100,2,86,0"
+                 VerticalAlignment="Top"
+                 Background="{x:Null}"
+                 BorderThickness="0"
+                 Padding="0"
+                 Panel.ZIndex="0"
+                 ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                 ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                 SelectionMode="Single"
+                 PreviewMouseLeftButtonDown="RopeList_PreviewMouseLeftButtonDown"
+                 PreviewMouseLeftButtonUp="RopeList_PreviewMouseLeftButtonUp"
+                 PreviewMouseMove="RopeList_PreviewMouseMove"
+                 KeyDown="RopeList_KeyDown">
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal" />
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="Margin" Value="0,0,4,0" />
+                    <Setter Property="Padding" Value="0" />
+                    <Setter Property="Background" Value="{x:Null}" />
+                    <Setter Property="BorderThickness" Value="0" />
+                    <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+                    <Setter Property="RenderTransformOrigin" Value="0.5,0.5" />
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="ListBoxItem">
+                                <Border x:Name="SelectionRing"
+                                        Padding="3"
+                                        Background="{x:Null}"
+                                        BorderBrush="Transparent"
+                                        BorderThickness="1"
+                                        CornerRadius="10"
+                                        RenderTransformOrigin="0.5,0.5">
+                                    <ContentPresenter />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsSelected" Value="True">
+                                        <Setter TargetName="SelectionRing"
+                                                Property="BorderBrush"
+                                                Value="{StaticResource GlassSelectionBrush}" />
+                                        <Setter TargetName="SelectionRing"
+                                                Property="RenderTransform">
+                                            <Setter.Value>
+                                                <TransformGroup>
+                                                    <ScaleTransform ScaleX="1.012" ScaleY="1.012" />
+                                                    <TranslateTransform Y="-2" />
+                                                </TransformGroup>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </ListBox.ItemContainerStyle>
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid Width="{Binding FrameWidth}"
+                          Height="{Binding FrameHeight}"
+                          MouseEnter="RopeCard_MouseEnter"
+                          MouseLeave="RopeCard_MouseLeave">
+                        <Grid Width="{Binding DisplayWidth}"
+                              Height="{Binding DisplayHeight}"
+                              Margin="8,31,8,5">
+                            <controls:RoundedImage Source="{Binding Thumbnail}"
+                                                   Background="{StaticResource GlassFrameFillBrush}"
+                                                   CornerRadius="10"
+                                                   BorderBrush="{StaticResource GlassInnerBorderBrush}"
+                                                   OuterBorderBrush="{StaticResource GlassOuterBorderBrush}"
+                                                   HighlightBrush="{StaticResource GlassHighlightBrush}"
+                                                   BorderThickness="1.2"
+                                                   Stretch="Uniform"
+                                                   MouseRightButtonDown="RopeImage_MouseRightButtonDown">
+                                <controls:RoundedImage.Style>
+                                    <Style TargetType="{x:Type controls:RoundedImage}">
+                                        <Setter Property="Effect" Value="{StaticResource RopeCardShadow}" />
+                                        <Style.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Effect" Value="{StaticResource HoverCardShadow}" />
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </controls:RoundedImage.Style>
+                                <ToolTipService.ToolTip>
+                                    <StackPanel>
+                                        <TextBlock FontWeight="SemiBold" Text="{Binding DisplayTime}" />
+                                        <TextBlock Margin="0,3,0,0"
+                                                   Foreground="{StaticResource DarkTextSecondaryBrush}"
+                                                   FontFamily="{StaticResource MonoFont}"
+                                                   FontSize="10"
+                                                   Text="{Binding Dimensions}" />
+                                    </StackPanel>
+                                </ToolTipService.ToolTip>
+                            </controls:RoundedImage>
+
+                            <Border x:Name="HoldHint"
+                                    Margin="0,0,0,8"
+                                    Padding="8,4"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Bottom"
+                                    Background="{StaticResource FloatingPillBrush}"
+                                    BorderBrush="{StaticResource FloatingPillBorderBrush}"
+                                    BorderThickness="1"
+                                    CornerRadius="7"
+                                    IsHitTestVisible="False"
+                                    Opacity="0">
+                                <TextBlock x:Name="HoldHintText"
+                                           Foreground="{StaticResource DarkTextBrush}"
+                                           FontSize="9"
+                                           Text="按住拖动可取下" />
+                            </Border>
+
+                            <Button Margin="2,0,0,0"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Top"
+                                    Tag="Delete"
+                                    Style="{StaticResource GlassDeleteButtonStyle}"
+                                    ToolTip="删除截图"
+                                    AutomationProperties.Name="删除截图"
+                                    Click="DeleteButton_Click" />
+                        </Grid>
+
+                        <Grid Width="20"
+                              Height="31"
+                              HorizontalAlignment="Center"
+                              VerticalAlignment="Top"
+                              Background="Transparent"
+                              Cursor="Hand"
+                              Tag="Detach"
+                              ToolTip="取下图片"
+                              MouseLeftButtonDown="Clothespin_MouseLeftButtonDown">
+                            <Grid Effect="{StaticResource FloatingControlShadow}">
+                                <Path Width="3"
+                                      Height="7"
+                                      Margin="0,0,0,1"
+                                      HorizontalAlignment="Center"
+                                      VerticalAlignment="Top"
+                                      Stroke="{StaticResource RopeBrush}"
+                                      StrokeThickness="1.3"
+                                      Data="M 0,0 L 0,7" />
+                                <Border Width="7"
+                                        Height="23"
+                                        Margin="0,5,6,0"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Top"
+                                        Background="{StaticResource ClothespinBrush}"
+                                        BorderBrush="{StaticResource ClothespinSeamBrush}"
+                                        BorderThickness="1"
+                                        CornerRadius="3"
+                                        RenderTransformOrigin="0.5,0.1">
+                                    <Border.RenderTransform>
+                                        <RotateTransform Angle="-3" />
+                                    </Border.RenderTransform>
+                                </Border>
+                                <Border Width="7"
+                                        Height="23"
+                                        Margin="6,5,0,0"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Top"
+                                        Background="{StaticResource ClothespinBrush}"
+                                        BorderBrush="{StaticResource ClothespinSeamBrush}"
+                                        BorderThickness="1"
+                                        CornerRadius="3"
+                                        RenderTransformOrigin="0.5,0.1">
+                                    <Border.RenderTransform>
+                                        <RotateTransform Angle="3" />
+                                    </Border.RenderTransform>
+                                </Border>
+                                <Border Width="14"
+                                        Height="2"
+                                        Margin="0,15,0,0"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Top"
+                                        Background="{StaticResource ClothespinSpringBrush}"
+                                        CornerRadius="1" />
+                                <Border Width="3"
+                                        Height="3"
+                                        Margin="0,14,0,0"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Top"
+                                        Background="{StaticResource ClothespinHighLightBrush}"
+                                        CornerRadius="1.5" />
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <Border x:Name="EmptyState"
+                Padding="12,7"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Background="{StaticResource FloatingPillBrush}"
+                BorderBrush="{StaticResource FloatingPillBorderBrush}"
+                BorderThickness="1"
+                CornerRadius="8"
+                Effect="{StaticResource FloatingControlShadow}"
+                Panel.ZIndex="3"
+                Visibility="Collapsed">
+            <TextBlock Foreground="{StaticResource DarkTextSecondaryBrush}"
+                       FontSize="11"
+                       Text="还没有图片" />
+        </Border>
+
+        <Border x:Name="DropHint"
+                Padding="12,7"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Background="{StaticResource FloatingPillBrush}"
+                BorderBrush="{StaticResource AccentBrush}"
+                BorderThickness="1"
+                CornerRadius="8"
+                Effect="{StaticResource FloatingControlShadow}"
+                IsHitTestVisible="False"
+                Panel.ZIndex="3"
+                Visibility="Collapsed">
+            <TextBlock Foreground="{StaticResource DarkTextBrush}"
+                       FontSize="11"
+                       Text="松开以导入" />
+        </Border>
+
+        <Border x:Name="DetachHint"
+                Padding="12,7"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Bottom"
+                Background="{StaticResource FloatingPillBrush}"
+                BorderBrush="{StaticResource FloatingPillBorderBrush}"
+                BorderThickness="1"
+                CornerRadius="8"
+                Effect="{StaticResource FloatingControlShadow}"
+                IsHitTestVisible="False"
+                Panel.ZIndex="3"
+                Visibility="Collapsed">
+            <TextBlock Foreground="{StaticResource DarkTextBrush}"
+                       FontSize="11"
+                       Text="松开以钉到桌面" />
+        </Border>
+    </Grid>
+</Window>
